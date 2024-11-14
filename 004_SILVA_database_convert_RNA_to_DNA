@@ -1,0 +1,28 @@
+#!/bin/bash
+
+
+#SBATCH --time=48:00:00   # walltime limit (HH:MM:SS)
+#SBATCH --nodes=1   # number of nodes
+#SBATCH --ntasks-per-node=48   # 24 processor core(s) per node X 2 threads per core
+#SBATCH --partition=short    # standard node(s)
+#SBATCH --output="out_silva_extract" # job standard output file (%j replaced by job id)
+#SBATCH --error="err_silva_extract" # job standard error file (%j replaced by job id)
+
+
+wget https://www.arb-silva.de/fileadmin/silva_databases/release_138_2/Exports/SILVA_138.2_LSURef_NR99_tax_silva.fasta.gz
+wget https://www.arb-silva.de/fileadmin/silva_databases/release_138_2/Exports/SILVA_138.2_SSURef_NR99_tax_silva.fasta.gz
+
+gunzip SILVA_138.2_LSURef_NR99_tax_silva.fasta.gz
+gunzip SILVA_138.2_SSURef_NR99_tax_silva.fasta.gz
+
+## Running following script to change U to T.
+
+more SILVA_138.2_SSURef_NR99_tax_silva.fasta | awk '/^>/ {printf("%s%s\t",(N>0?"\n":""),$0);N++;next;} {printf("%s",$0);} END {printf("\n");}'| sed 's/\t/\n/g'| while read L; do echo $L; read L; echo "$L" | tr "U" "T"; done > SILVA_138.2_SSURef_NR99_tax_silva_DNA.fasta
+more SILVA_138.2_LSURef_NR99_tax_silva.fasta | awk '/^>/ {printf("%s%s\t",(N>0?"\n":""),$0);N++;next;} {printf("%s",$0);} END {printf("\n");}'| sed 's/\t/\n/g'| while read L; do echo $L; read L; echo "$L" | tr "U" "T"; done > SILVA_138.2_LSURef_NR99_tax_silva_DNA.fasta
+
+
+## Then manually removed the header with different symbol with nano filename.fasta
+
+#Finally combine two fasta files in one signle file.
+
+##cat SILVA_138.2_* > SILVA_138.2_LSURef_SSURef.fasta
