@@ -25,4 +25,4 @@ more SILVA_138.2_LSURef_NR99_tax_silva.fasta | awk '/^>/ {printf("%s%s\t",(N>0?"
 
 #Finally combine two fasta files in one signle file.
 
-##cat SILVA_138.2_* > SILVA_138.2_LSURef_SSURef.fasta
+##cat SILVA_138.2_LSURef_NR99_tax_silva_DNA.fasta SILVA_138.2_SSURef_NR99_tax_silva_DNA.fasta > SILVA_138.2_LSURef_SSURef.fasta
