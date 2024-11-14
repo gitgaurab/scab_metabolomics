@@ -1,0 +1,71 @@
+#!/bin/bash
+
+
+#SBATCH --time=48:00:00   # walltime limit (HH:MM:SS)
+#SBATCH --nodes=1   # number of nodes
+#SBATCH --ntasks-per-node=48   # 24 processor core(s) per node X 2 threads per core
+#SBATCH --partition=short    # standard node(s)
+#SBATCH --output="out_extract" # job standard output file (%j replaced by job id)
+#SBATCH --error="err_extract" # job standard error file (%j replaced by job id)
+
+: '
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXBR_RNAseq_3_Control_1_24hr_TACCGAGG_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXBR_RNAseq_3_Control_1_24hr_TACCGAGG_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXBS_RNAseq_4_Control_1_48hr_CGTTAGAA_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXBS_RNAseq_4_Control_1_48hr_CGTTAGAA_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXBT_RNAseq_6_Control_1_96hr_AGCCTCAT_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXBT_RNAseq_6_Control_1_96hr_AGCCTCAT_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXBU_RNAseq_10_Control_2_24hr_GATTCTGC_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXBU_RNAseq_10_Control_2_24hr_GATTCTGC_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXBW_RNAseq_11_Control_2_48hr_TCGTAGTG_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXBW_RNAseq_11_Control_2_48hr_TCGTAGTG_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXBX_RNAseq_13_Control_2_96hr_CTACGACA_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXBX_RNAseq_13_Control_2_96hr_CTACGACA_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXBY_RNAseq_17_Control_3_24hr_TAAGTGGT_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXBY_RNAseq_17_Control_3_24hr_TAAGTGGT_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXBZ_RNAseq_18_Control_3_48hr_CGGACAAC_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXBZ_RNAseq_18_Control_3_48hr_CGGACAAC_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCA_RNAseq_20_Control_3_96hr_ATATGGAT_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCA_RNAseq_20_Control_3_96hr_ATATGGAT_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+
+
+
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCB_RNAseq_24_Pa-OK-11_1_24hr_GCGCAAGC_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCB_RNAseq_24_Pa-OK-11_1_24hr_GCGCAAGC_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCC_RNAseq_25_Pa-OK-11_1_48hr_AAGATACT_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCC_RNAseq_25_Pa-OK-11_1_48hr_AAGATACT_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCD_RNAseq_27_Pa-OK-11_1_96hr_GGAGCGTC_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCD_RNAseq_27_Pa-OK-11_1_96hr_GGAGCGTC_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCE_RNAseq_31_Pa-OK-11_2_24hr_ATGGCATG_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCE_RNAseq_31_Pa-OK-11_2_24hr_ATGGCATG_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCF_RNAseq_32_Pa-OK-11_2_48hr_GCAATGCA_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCF_RNAseq_32_Pa-OK-11_2_48hr_GCAATGCA_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCG_RNAseq_34_Pa-OK-11_2_96hr_GTTCCAAT_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCG_RNAseq_34_Pa-OK-11_2_96hr_GTTCCAAT_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCH_RNAseq_38_Pa-OK-11_3_24hr_ACCTTGGC_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCH_RNAseq_38_Pa-OK-11_3_24hr_ACCTTGGC_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCI_RNAseq_39_Pa-OK-11_3_48hr_ATATCTCG_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCI_RNAseq_39_Pa-OK-11_3_48hr_ATATCTCG_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCJ_RNAseq_41_Pa-OK-11_3_96hr_GCGCTCTA_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCJ_RNAseq_41_Pa-OK-11_3_96hr_GCGCTCTA_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+
+'
+
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCK_RNAseq_45_De-Tif-11_1_24hr_AACAGGTT_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCK_RNAseq_45_De-Tif-11_1_24hr_AACAGGTT_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCL_RNAseq_46_De-Tif-11_1_48hr_GGTGAACC_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCL_RNAseq_46_De-Tif-11_1_48hr_GGTGAACC_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCM_RNAseq_48_De-Tif-11_1_96hr_CAACAATG_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCM_RNAseq_48_De-Tif-11_1_96hr_CAACAATG_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCN_RNAseq_52_De-Tif-11_2_24hr_TGGTGGCA_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCN_RNAseq_52_De-Tif-11_2_24hr_TGGTGGCA_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCP_RNAseq_53_De-Tif-11_2_48hr_AGGCAGAG_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCP_RNAseq_53_De-Tif-11_2_48hr_AGGCAGAG_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCQ_RNAseq_55_De-Tif-11_2_96hr_GAATGAGA_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCQ_RNAseq_55_De-Tif-11_2_96hr_GAATGAGA_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCR_RNAseq_59_De-Tif-11_3_24hr_TGCGGCGT_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCR_RNAseq_59_De-Tif-11_3_24hr_TGCGGCGT_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCS_RNAseq_60_De-Tif-11_3_48hr_CATAATAC_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCS_RNAseq_60_De-Tif-11_3_48hr_CATAATAC_Carya_illinoinensis_I972_L2_R2.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCT_RNAseq_62_De-Tif-11_3_96hr_GATCTATC_Carya_illinoinensis_I972_L2_R1.fastq.bz2
+wget --user pecan --password ran90895xc! https://hagsc.org/restricted_access/pecan/RNASeq.Dec2019/IXCT_RNAseq_62_De-Tif-11_3_96hr_GATCTATC_Carya_illinoinensis_I972_L2_R2.fastq.bz2
