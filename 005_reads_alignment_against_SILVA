@@ -1,0 +1,69 @@
+#!/bin/bash
+#SBATCH --time=48:00:00   # walltime limit (HH:MM:SS)
+#SBATCH --nodes=1   # number of nodes
+#SBATCH --ntasks-per-node=24   # 12 processor core(s) per node X 2 threads per core
+#SBATCH --mem=64G   # maximum memory per node
+#SBATCH --partition=short    # standard node(s)
+#SBATCH --output="out_align_silva.%j.out" # job standard output file (%j replaced by job id)
+#SBATCH --error="err_align_silva.%j.err" # job standard error file (%j replaced by job id)
+
+
+
+reads="/90daydata/pecan_scab_gwas/gaurab/RNA_seq_Desirable/trimmed"
+unaligned_rna="/90daydata/pecan_scab_gwas/gaurab/RNA_seq_Desirable/unaligned_rna"
+outsam_rna="/90daydata/pecan_scab_gwas/gaurab/RNA_seq_Desirable/outsam_rna"
+index_rna="/90daydata/pecan_scab_gwas/gaurab/RNA_seq_Desirable/index_rna"
+rna_fasta="/90daydata/pecan_scab_gwas/gaurab/RNA_seq_Desirable/index_rna/SILVA_138.2_LSURef_SSURef.fasta"
+
+
+ml bowtie2/2.5.2
+
+time bowtie2-build $rna_fasta $index_rna/rrna
+
+
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXBR_RNAseq_3_Control_1_24hr_TACCGAGG_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXBR_RNAseq_3_Control_1_24hr_TACCGAGG_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Control_1_24hr -S $outsam_rna/Control_1_24hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXBS_RNAseq_4_Control_1_48hr_CGTTAGAA_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXBS_RNAseq_4_Control_1_48hr_CGTTAGAA_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Control_1_48hr -S $outsam_rna/Control_1_48hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXBT_RNAseq_6_Control_1_96hr_AGCCTCAT_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXBT_RNAseq_6_Control_1_96hr_AGCCTCAT_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Control_1_96hr -S $outsam_rna/Control_1_96hr_rrna.sam
+: '
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXBU_RNAseq_10_Control_2_24hr_GATTCTGC_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXBU_RNAseq_10_Control_2_24hr_GATTCTGC_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Control_2_24hr -S $outsam_rna/Control_2_24hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXBW_RNAseq_11_Control_2_48hr_TCGTAGTG_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXBW_RNAseq_11_Control_2_48hr_TCGTAGTG_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Control_2_48hr -S $outsam_rna/Control_2_48hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXBX_RNAseq_13_Control_2_96hr_CTACGACA_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXBX_RNAseq_13_Control_2_96hr_CTACGACA_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Control_2_96hr -S $outsam_rna/Control_2_96hr_rrna.sam
+
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXBY_RNAseq_17_Control_3_24hr_TAAGTGGT_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXBY_RNAseq_17_Control_3_24hr_TAAGTGGT_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Control_3_24hr -S $outsam_rna/Control_3_24hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXBZ_RNAseq_18_Control_3_48hr_CGGACAAC_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXBZ_RNAseq_18_Control_3_48hr_CGGACAAC_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Control_3_48hr -S $outsam_rna/Control_3_48hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCA_RNAseq_20_Control_3_96hr_ATATGGAT_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCA_RNAseq_20_Control_3_96hr_ATATGGAT_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Control_3_96hr -S $outsam_rna/Control_3_96hr_rrna.sam
+
+
+
+
+
+
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCB_RNAseq_24_Pa-OK-11_1_24hr_GCGCAAGC_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCB_RNAseq_24_Pa-OK-11_1_24hr_GCGCAAGC_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Pa-OK-11_1_24hr -S $outsam_rna/Pa-OK-11_1_24hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCC_RNAseq_25_Pa-OK-11_1_48hr_AAGATACT_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCC_RNAseq_25_Pa-OK-11_1_48hr_AAGATACT_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Pa-OK-11_1_48hr -S $outsam_rna/Pa-OK-11_1_48hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCD_RNAseq_27_Pa-OK-11_1_96hr_GGAGCGTC_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCD_RNAseq_27_Pa-OK-11_1_96hr_GGAGCGTC_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Pa-OK-11_1_96hr -S $outsam_rna/Pa-OK-11_1_96hr_rrna.sam
+
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCE_RNAseq_31_Pa-OK-11_2_24hr_ATGGCATG_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCE_RNAseq_31_Pa-OK-11_2_24hr_ATGGCATG_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Pa-OK-11_2_24hr -S $outsam_rna/Pa-OK-11_2_24hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCF_RNAseq_32_Pa-OK-11_2_48hr_GCAATGCA_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCF_RNAseq_32_Pa-OK-11_2_48hr_GCAATGCA_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Pa-OK-11_2_48hr -S $outsam_rna/Pa-OK-11_2_48hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCG_RNAseq_34_Pa-OK-11_2_96hr_GTTCCAAT_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCG_RNAseq_34_Pa-OK-11_2_96hr_GTTCCAAT_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Pa-OK-11_2_96hr -S $outsam_rna/Pa-OK-11_2_96hr_rrna.sam
+
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCH_RNAseq_38_Pa-OK-11_3_24hr_ACCTTGGC_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCH_RNAseq_38_Pa-OK-11_3_24hr_ACCTTGGC_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Pa-OK-11_3_24hr -S $outsam_rna/Pa-OK-11_3_24hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCI_RNAseq_39_Pa-OK-11_3_48hr_ATATCTCG_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCI_RNAseq_39_Pa-OK-11_3_48hr_ATATCTCG_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Pa-OK-11_3_48hr -S $outsam_rna/Pa-OK-11_3_48hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCJ_RNAseq_41_Pa-OK-11_3_96hr_GCGCTCTA_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCJ_RNAseq_41_Pa-OK-11_3_96hr_GCGCTCTA_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/Pa-OK-11_3_96hr -S $outsam_rna/Pa-OK-11_3_96hr_rrna.sam
+
+
+
+
+
+
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCK_RNAseq_45_De-Tif-11_1_24hr_AACAGGTT_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCK_RNAseq_45_De-Tif-11_1_24hr_AACAGGTT_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/De-Tif-11_1_24hr -S $outsam_rna/De-Tif-11_1_24hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCL_RNAseq_46_De-Tif-11_1_48hr_GGTGAACC_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCL_RNAseq_46_De-Tif-11_1_48hr_GGTGAACC_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/De-Tif-11_1_48hr -S $outsam_rna/De-Tif-11_1_48hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCM_RNAseq_48_De-Tif-11_1_96hr_CAACAATG_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCM_RNAseq_48_De-Tif-11_1_96hr_CAACAATG_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/De-Tif-11_1_96hr -S $outsam_rna/De-Tif-11_1_96hr_rrna.sam
+
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCN_RNAseq_52_De-Tif-11_2_24hr_TGGTGGCA_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCN_RNAseq_52_De-Tif-11_2_24hr_TGGTGGCA_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/De-Tif-11_2_24hr -S $outsam_rna/De-Tif-11_2_24hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCP_RNAseq_53_De-Tif-11_2_48hr_AGGCAGAG_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCP_RNAseq_53_De-Tif-11_2_48hr_AGGCAGAG_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/De-Tif-11_2_48hr -S $outsam_rna/De-Tif-11_2_48hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCQ_RNAseq_55_De-Tif-11_2_96hr_GAATGAGA_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCQ_RNAseq_55_De-Tif-11_2_96hr_GAATGAGA_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/De-Tif-11_2_96hr -S $outsam_rna/De-Tif-11_2_96hr_rrna.sam
+
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCR_RNAseq_59_De-Tif-11_3_24hr_TGCGGCGT_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCR_RNAseq_59_De-Tif-11_3_24hr_TGCGGCGT_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/De-Tif-11_3_24hr -S $outsam_rna/De-Tif-11_3_24hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCS_RNAseq_60_De-Tif-11_3_48hr_CATAATAC_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCS_RNAseq_60_De-Tif-11_3_48hr_CATAATAC_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/De-Tif-11_3_48hr -S $outsam_rna/De-Tif-11_3_48hr_rrna.sam
+time bowtie2 -p 8 -x $index_rna/rrna  -1 $reads/IXCT_RNAseq_62_De-Tif-11_3_96hr_GATCTATC_Carya_illinoinensis_I972_L2_R1_val_1.fq.gz -2 $reads/IXCT_RNAseq_62_De-Tif-11_3_96hr_GATCTATC_Carya_illinoinensis_I972_L2_R2_val_2.fq.gz --un-conc-gz $unaligned_rna/De-Tif-11_3_96hr -S $outsam_rna/De-Tif-11_3_96hr_rrna.sam
+'
