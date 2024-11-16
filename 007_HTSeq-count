@@ -1,0 +1,64 @@
+#!/bin/bash
+#SBATCH --time=48:00:00   # walltime limit (HH:MM:SS)
+#SBATCH --nodes=1   # number of nodes
+#SBATCH --ntasks-per-node=24   # 12 processor core(s) per node X 2 threads per core
+#SBATCH --mem=64G   # maximum memory per node
+#SBATCH --partition=short    # standard node(s)
+#SBATCH --output="out_htseq.%j.out" # job standard output file (%j replaced by job id)
+#SBATCH --error="err_htseq.%j.err" # job standard error file (%j replaced by job id)
+
+
+gtf="/90daydata/pecan_scab_gwas/gaurab/RNA_seq_Desirable/htseq/GCF_018687715.1_C.illinoinensisPawnee_v1_genomic.gtf"
+bam="/90daydata/pecan_scab_gwas/gaurab/RNA_seq_Desirable/starout_pecan"
+outdir="/90daydata/pecan_scab_gwas/gaurab/RNA_seq_Desirable/htseq"
+
+
+ml htseq/2.0.2 
+ml samtools/1.17  
+
+: '
+## Index bam file (probably wont necessary but showed no index file found in sample htseq-count run
+for i in $bam/*sortedByCoord.out.bam
+do
+samtools index -@ 10 $i
+done
+
+
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Control_1_24hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Control_1_24hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Control_1_48hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Control_1_48hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Control_1_96hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Control_1_96hr.htseq.counts
+
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Control_2_24hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Control_2_24hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Control_2_48hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Control_2_48hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Control_2_96hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Control_2_96hr.htseq.counts
+
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Control_3_24hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Control_3_24hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Control_3_48hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Control_3_48hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Control_3_96hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Control_3_96hr.htseq.counts
+
+
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/De-Tif-11_1_24hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/De-Tif-11_1_24hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/De-Tif-11_1_48hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/De-Tif-11_1_48hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/De-Tif-11_1_96hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/De-Tif-11_1_96hr.htseq.counts
+
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/De-Tif-11_2_24hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/De-Tif-11_2_24hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/De-Tif-11_2_48hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/De-Tif-11_2_48hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/De-Tif-11_2_96hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/De-Tif-11_2_96hr.htseq.counts
+
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/De-Tif-11_3_24hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/De-Tif-11_3_24hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/De-Tif-11_3_48hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/De-Tif-11_3_48hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/De-Tif-11_3_96hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/De-Tif-11_3_96hr.htseq.counts
+
+
+
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Pa-OK-11_1_24hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Pa-OK-11_1_24hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Pa-OK-11_1_48hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Pa-OK-11_1_48hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Pa-OK-11_1_96hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Pa-OK-11_1_96hr.htseq.counts
+
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Pa-OK-11_2_24hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Pa-OK-11_2_24hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Pa-OK-11_2_48hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Pa-OK-11_2_48hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Pa-OK-11_2_96hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Pa-OK-11_2_96hr.htseq.counts
+'
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Pa-OK-11_3_24hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Pa-OK-11_3_24hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Pa-OK-11_3_48hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Pa-OK-11_3_48hr.htseq.counts
+htseq-count -f bam -r pos -s reverse -t exon -i gene_id $bam/Pa-OK-11_3_96hrAligned.sortedByCoord.out.bam $gtf --minaqual 10 > $outdir/Pa-OK-11_3_96hr.htseq.counts
