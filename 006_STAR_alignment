@@ -1,0 +1,79 @@
+#!/bin/bash
+#SBATCH --time=48:00:00   # walltime limit (HH:MM:SS)
+#SBATCH --nodes=1   # number of nodes
+#SBATCH --ntasks-per-node=24   # 12 processor core(s) per node X 2 threads per core
+#SBATCH --mem=64G   # maximum memory per node
+#SBATCH --partition=short    # standard node(s)
+#SBATCH --output="out_align_star.%j.out" # job standard output file (%j replaced by job id)
+#SBATCH --error="err_align_star.%j.err" # job standard error file (%j replaced by job id)
+
+
+
+index="/90daydata/pecan_scab_gwas/gaurab/RNA_seq_Desirable/index"
+genome="/90daydata/pecan_scab_gwas/gaurab/RNA_seq_Desirable/index/GCF_018687715.1_C.illinoinensisPawnee_v1_genomic.fna"
+bam="/90daydata/pecan_scab_gwas/gaurab/RNA_seq_Desirable/starout_pecan"
+unaligned_rna="/90daydata/pecan_scab_gwas/gaurab/RNA_seq_Desirable/unaligned_rna"
+
+ml star/2.7.10b
+
+
+: '
+####Indexing genome before alignment
+
+STAR --runThreadN 10 --runMode genomeGenerate --genomeDir $index --genomeFastaFiles $genome --genomeSAindexNbases 13 --limitGenomeGenerateRAM=60584870869
+
+## Run alignment
+
+
+
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Control_1_24hr.1 $unaligned_rna/Control_1_24hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Control_1_24hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Control_1_48hr.1 $unaligned_rna/Control_1_48hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Control_1_48hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Control_1_96hr.1 $unaligned_rna/Control_1_96hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Control_1_96hr --outSAMtype BAM SortedByCoordinate
+
+
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Control_2_24hr.1 $unaligned_rna/Control_2_24hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Control_2_24hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Control_2_48hr.1 $unaligned_rna/Control_2_48hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Control_2_48hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Control_2_96hr.1 $unaligned_rna/Control_2_96hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Control_2_96hr --outSAMtype BAM SortedByCoordinate
+
+
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Control_3_24hr.1 $unaligned_rna/Control_3_24hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Control_3_24hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Control_3_48hr.1 $unaligned_rna/Control_3_48hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Control_3_48hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Control_3_96hr.1 $unaligned_rna/Control_3_96hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Control_3_96hr --outSAMtype BAM SortedByCoordinate
+
+
+
+
+
+
+
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/De-Tif-11_1_24hr.1 $unaligned_rna/De-Tif-11_1_24hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/De-Tif-11_1_24hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/De-Tif-11_1_48hr.1 $unaligned_rna/De-Tif-11_1_48hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/De-Tif-11_1_48hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/De-Tif-11_1_96hr.1 $unaligned_rna/De-Tif-11_1_96hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/De-Tif-11_1_96hr --outSAMtype BAM SortedByCoordinate
+
+
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/De-Tif-11_2_24hr.1 $unaligned_rna/De-Tif-11_2_24hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/De-Tif-11_2_24hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/De-Tif-11_2_48hr.1 $unaligned_rna/De-Tif-11_2_48hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/De-Tif-11_2_48hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/De-Tif-11_2_96hr.1 $unaligned_rna/De-Tif-11_2_96hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/De-Tif-11_2_96hr --outSAMtype BAM SortedByCoordinate
+
+
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/De-Tif-11_3_24hr.1 $unaligned_rna/De-Tif-11_3_24hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/De-Tif-11_3_24hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/De-Tif-11_3_48hr.1 $unaligned_rna/De-Tif-11_3_48hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/De-Tif-11_3_48hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/De-Tif-11_3_96hr.1 $unaligned_rna/De-Tif-11_3_96hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/De-Tif-11_3_96hr --outSAMtype BAM SortedByCoordinate
+
+
+
+
+
+
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Pa-OK-11_1_24hr.1 $unaligned_rna/Pa-OK-11_1_24hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Pa-OK-11_1_24hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Pa-OK-11_1_48hr.1 $unaligned_rna/Pa-OK-11_1_48hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Pa-OK-11_1_48hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Pa-OK-11_1_96hr.1 $unaligned_rna/Pa-OK-11_1_96hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Pa-OK-11_1_96hr --outSAMtype BAM SortedByCoordinate
+
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Pa-OK-11_2_24hr.1 $unaligned_rna/Pa-OK-11_2_24hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Pa-OK-11_2_24hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Pa-OK-11_2_48hr.1 $unaligned_rna/Pa-OK-11_2_48hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Pa-OK-11_2_48hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Pa-OK-11_2_96hr.1 $unaligned_rna/Pa-OK-11_2_96hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Pa-OK-11_2_96hr --outSAMtype BAM SortedByCoordinate
+
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Pa-OK-11_3_24hr.1 $unaligned_rna/Pa-OK-11_3_24hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Pa-OK-11_3_24hr --outSAMtype BAM SortedByCoordinate
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Pa-OK-11_3_48hr.1 $unaligned_rna/Pa-OK-11_3_48hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Pa-OK-11_3_48hr --outSAMtype BAM SortedByCoordinate
+'
+STAR --runThreadN 10 --genomeDir $index  --readFilesIn $unaligned_rna/Pa-OK-11_3_96hr.1 $unaligned_rna/Pa-OK-11_3_96hr.2 --readFilesCommand gunzip -c --outFileNamePrefix $bam/Pa-OK-11_3_96hr --outSAMtype BAM SortedByCoordinate
